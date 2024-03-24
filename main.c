@@ -11,8 +11,21 @@
     int seat_sold;
     int empty_seat;
  } IPL;
+typedef struct customer
+{
+    char name[20];
+    char gender[2];
+    int number;
+}customer;
 
+
+void menu(){
+    printf("Main menu");
+}
 void login(){
+    customer person;
+    char pass[20];
+    char password[20]="CS112PG32";
     printf("\n\n");
     printf("\t\t");
     for(int i=0;i<77;i++) printf("%c", 205 ); 
@@ -21,7 +34,24 @@ void login(){
     printf("\n");
     printf("\t\t");
     for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\t\t Enter your Username : ");
+    printf("\n\n");
+    printf("\t\t Enter your Phone number : ");
+    scanf("%d", &person.number);
+    printf("\n");
+    printf("\t\t Enter your Password to login : ");
+    scanf("%s", pass);
+    if (strcmp(pass,password))
+    {
+        printf("Wrong password !!");
+        login();
+        // exit(1);
+    }
+    else
+    {
+        menu();
+    }
+    
+    
 }
  void welcome(){
     printf("\t\t");
