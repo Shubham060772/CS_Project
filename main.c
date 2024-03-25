@@ -44,6 +44,45 @@ void date_menu(){
     }
 }
 
+void team_menu(){
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 );
+    printf("\n\n");
+    printf("\t\t\t\t\t     TEAM MENU");
+    printf("\n\n");
+     printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 );
+    printf("\n");
+    FILE *myFileStream = fopen("iplteammenu.txt", "r");
+    if (myFileStream == NULL) {
+
+        printf("File failed to open\n");
+
+    }
+    else{
+
+        // int code;
+        char code[2],team[20];
+        while (fscanf(myFileStream, "%s %s",code , team) == 2){
+            printf("\t\t%4s. %-12s\n", code, team);
+        }
+    fclose(myFileStream);   
+    printf("\n\n");
+    }
+    int choice;
+    printf("\t\tEnter Code of Your  Team: ");
+    scanf("%s",&choice);
+    system("cls");
+    switch (choice)
+    {
+    case 1:
+        break;
+    
+    default:
+        break;
+    }
+}
+
 void menu(){
     int choice;
     printf("\n\n");
@@ -77,7 +116,7 @@ void menu(){
     switch (choice)
     {
         case 1: date_menu(); break;
-        // case 2: team_menu(); break;
+        case 2: team_menu(); break;
         // case 3: location_menu(); break;
         default: printf("Enter a valid choice !!"); menu();
     }
