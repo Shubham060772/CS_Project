@@ -148,6 +148,7 @@ void login(){
     printf("\t\t\t\t Enter your Choice :");
     int choice;
     scanf("%d",&choice);
+    system("cls");
     switch (choice)
     {
     case 1:
