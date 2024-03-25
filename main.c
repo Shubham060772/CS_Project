@@ -37,20 +37,11 @@ void date_menu(){
 
         int code;
         char match[12],location[12],date[15],time[7];
-        while (fscanf(myFileStream, "%d %s %s %s %s", &code, match, location, date, time) == 5) {
-        printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match, location, date, time);
-    }
-
+        while (fscanf(myFileStream, "%d %s %s %s %s", &code, match, location, date, time) == 5){
+            printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match, location, date, time);
+        }
     fclose(myFileStream);
-
-    //     char file_content[1000];
-    // while (fgets(file_content, sizeof(file_content), myFileStream) != NULL) {
-    //     printf("%s", file_content);
-    // }
-    // fclose(myFileStream);
     }
-
-    // return 0;
 }
 
 void menu(){
