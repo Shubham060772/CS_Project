@@ -2,7 +2,7 @@
 #include<math.h>
 #include<string.h>
 #include<stdlib.h>
- typedef struct IPL{
+typedef struct IPL{
     char matches[12];
     char location[12];
     char date[15];
@@ -88,6 +88,32 @@ void seatmatrix_display(){
             seatmatrix_display();
             break;
         }
+}
+
+void seat_selection(){
+    int row,col,tickets;
+    printf("Nmber of tickets = ");
+    scanf("%d",&tickets);
+    
+    while(tickets>10 || tickets<=0){
+        printf("Invalid number\nPlease enter a number between 1 and 10:\n");
+        printf("Number of tickets = ");
+    }
+    while (tickets--){
+    printf("Enter row and column respectively :");
+    scanf("%d %d", &row, &col);
+    if (arr[row][col - 1] == 1)
+    {
+        printf("Seat is booked , select another seat");
+        tickets++;
+    }
+    else
+    {
+        arr[row][col - 1] = 1;
+        printf("Seat selected successfully\n");
+    }
+}
+    seatmatrix_display();
 }
 
 void date_menu(){
