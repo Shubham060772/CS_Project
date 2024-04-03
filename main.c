@@ -17,6 +17,78 @@ typedef struct customer
     char gender[2];
     int number;
 }customer;
+IPL match;
+customer c1,c2,c3;
+char stype[15];
+int arr[11][11];
+
+void seatmatrix_display(){
+        int choice;
+        printf("1. Pavilion \n 2.Right half \n 3. Left half");
+        printf("\n Enter Your Choice :");
+        scanf("%d",&choice);
+        for (int i = 0; i < 11; i++)
+            {
+                for (int j = 0; j < 11; j++)
+                {
+                    arr[i][j]=0;
+                }
+            }
+        switch (choice)
+        {
+        case 1:
+
+            strcpy(stype, "Pavilion");
+            for (int i = 0; i < 11; i++)
+            {
+                
+                for (int j = 0; j < 11; j++)
+                {
+                    if(j==0 && i!=10) printf(" %d| ",i);
+                    else if(i==10 && j!=0) printf(" %d ",j);
+                    else if(arr[i][j]==0) printf(" _ ");
+                    else printf(" X ");
+                }
+                printf("\n");
+            }
+            break;
+        case 2:
+            strcpy(stype, "Right half");
+            for (int i = 0; i < 11; i++)
+            {
+                
+                for (int j = 0; j < 11; j++)
+                {
+                    if(j==0 && i!=10) printf(" %d| ",i);
+                    else if(i==10 && j!=0) printf(" %d ",j);
+                    else if(arr[i][j]==0) printf(" _ ");
+                    else printf(" X ");
+                }
+                printf("\n");
+            }
+            break;
+        case 3:
+            strcpy(stype, "Left half");
+            for (int i = 0; i < 11; i++)
+            {
+                
+                for (int j = 0; j < 11; j++)
+                {
+                    if(j==0 && i!=10) printf(" %d| ",i);
+                    else if(i==10 && j!=0) printf(" %d ",j);
+                    else if(arr[i][j]==0) printf(" _ ");
+                    else printf(" X ");
+                }
+                printf("\n");
+            }
+            break;
+        
+        default:
+            printf("Wrong choice");
+            seatmatrix_display();
+            break;
+        }
+}
 
 void date_menu(){
     printf("\t\t");
@@ -41,6 +113,7 @@ void date_menu(){
             printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match, location, date, time);
         }
     fclose(myFileStream);
+    // seatmatrix_display();
     }
 }
 
@@ -123,7 +196,6 @@ void menu(){
 
 }
 void login(){
-    customer person;
     char pass[20];
     char password[20]="CS112PG32";
     printf("\n\n");
@@ -136,7 +208,7 @@ void login(){
     for(int i=0;i<77;i++) printf("%c", 205 );
     printf("\n\n");
     printf("\t\t Enter your Phone number : ");
-    scanf("%d", &person.number);
+    scanf("%d", &c1.number);
     printf("\n");
     printf("\t\t Enter your Password to login : ");
     scanf("%s", pass);
@@ -155,27 +227,24 @@ void login(){
     
     
 }
- void welcome(){
+void welcome(){
     printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\n");
-    printf("\t\t\t\t     Welcome To IPL Ticket booking Counter");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\n");
-    printf("\n");
-    printf("\t\t 1.  Login");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
-    printf("\t\t 2.  Exit");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
+    for(int i=0;i<77;i++) printf("%c", 205 );printf("\n");
+
+    printf("\t\t\t\t     Welcome To IPL Ticket booking Counter");printf("\n");printf("\t\t");
+
+    for(int i=0;i<77;i++) printf("%c", 205 );printf("\n\n");
+
+    printf("\t\t 1.  Login");printf("\n");printf("\t\t");
+
+    for(int i=0;i<77;i++) printf("_" );printf("\n\n");
+
+    printf("\t\t 2.  Exit");printf("\n");printf("\t\t");
+
+    for(int i=0;i<77;i++) printf("_" );printf("\n\n");
+
     printf("\t\t\t\t Enter your Choice :");
+    
     int choice;
     scanf("%d",&choice);
     system("cls");
