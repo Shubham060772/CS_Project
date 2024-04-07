@@ -10,6 +10,7 @@ typedef struct IPL{
     int total_seat;
     int seat_sold;
     int empty_seat;
+    char time[7];
  } IPL;
 typedef struct customer
 {
@@ -22,11 +23,32 @@ customer c1,c2,c3;
 char stype[15];
 int arr[11][11];
 
-void seatmatrix_display(){
-        int choice;
-        printf("1. Pavilion \n 2.Right half \n 3. Left half");
-        printf("\n Enter Your Choice :");
-        scanf("%d",&choice);
+void welcome();
+void login();
+void menu();
+void date_menu();
+void team_menu();
+void location_menu();
+void date_selection(int c); 
+void seat_selection();
+void seatmatrix_display();
+void payment_gateway();
+void print_bill();
+void display_snacks();
+void snacks_bill();
+void customer_details();
+void cancel_ticket();
+void order_history();
+void end_page();
+
+
+int main(){
+   welcome();
+   return 0;
+}
+
+void creating_seatmarix(){
+
         for (int i = 0; i < 11; i++)
             {
                 for (int j = 0; j < 11; j++)
@@ -34,6 +56,13 @@ void seatmatrix_display(){
                     arr[i][j]=0;
                 }
             }
+}
+
+void seatmatrix_display(){
+        int choice;
+        printf("1. Pavilion \n 2.Right half \n 3. Left half");
+        printf("\n Enter Your Choice :");
+        scanf("%d",&choice);
         switch (choice)
         {
         case 1:
@@ -51,6 +80,7 @@ void seatmatrix_display(){
                 }
                 printf("\n");
             }
+            seat_selection();
             break;
         case 2:
             strcpy(stype, "Right half");
@@ -104,7 +134,7 @@ void seat_selection(){
     scanf("%d %d", &row, &col);
     if (arr[row][col - 1] == 1)
     {
-        printf("Seat is booked , select another seat");
+        printf("Seat is booked , select another seat\n");
         tickets++;
     }
     else
@@ -112,8 +142,27 @@ void seat_selection(){
         arr[row][col - 1] = 1;
         printf("Seat selected successfully\n");
     }
+    for (int i = 0; i < 11; i++)
+            {
+                
+                for (int j = 0; j < 11; j++)
+                {
+                    if(j==0 && i!=10) printf(" %d| ",i);
+                    else if(i==10 && j!=0) printf(" %d ",j);
+                    else if(arr[i][j]==0) printf(" _ ");
+                    else printf(" X ");
+                }
+                printf("\n");
+            }
 }
+printf("Do you want to book nore tickets? (Y/N)");
+char a= getchar();
+if(a=='y'||a=='Y'){
+    system("cls");
     seatmatrix_display();
+    }else{
+    return ;
+    }
 }
 
 void date_menu(){
@@ -140,6 +189,12 @@ void date_menu(){
         }
     fclose(myFileStream);
     // seatmatrix_display();
+    int choice;
+    printf("\nEnter the number of your preferred");
+    scanf("%d",&choice);
+    system("cls");
+    date_selection(choice);
+
     }
 }
 
@@ -288,7 +343,35 @@ void welcome(){
 
 }
 
-int main(){
-   welcome();
-   return 0;
-}
+void date_selection(int c){
+    FILE *myFileStream = fopen("ipldatemenu.txt", "r");
+    if (myFileStream == NULL) {
+
+        printf("File failed to open\n");
+
+    }
+    else
+    {
+        int code;
+        // char match[12], location[12], date[15], time[7];
+        while (fscanf(myFileStream, "%d %s %s %s %s", &code, &match.matches, &match.location, &match.date, &match.time) == 5)
+        {
+            if (c==code){
+                // return show_match_details(c);
+            printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match.matches, match.location, match.date,  match.time);
+            printf("\nOpening windows for the selected match");
+            system("pause");
+            system("cls");
+            creating_seatmarix();
+            seatmatrix_display();
+            }
+            // else
+            // {
+            //     printf("\n\n No Match Found \n Please Try Again !!! \n");
+            //     // getch();
+            //     menu();
+            // }
+        }
+        
+        }
+    }
