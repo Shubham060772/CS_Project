@@ -12,16 +12,16 @@ typedef struct IPL{
     int empty_seat;
     char time[7];
  } IPL;
+IPL match;
 typedef struct customer
 {
     char name[20];
     char gender[2];
     int number;
 }customer;
-IPL match;
 customer c1,c2,c3;
-char stype[15];
-int arr[11][11];
+char stype[15]; // type of seat selected
+int arr[11][11]; // for seatmatrix
 
 void welcome(); //done
 void login(); //done
@@ -42,6 +42,7 @@ void customer_details();
 void cancel_ticket();
 void order_history();
 void end_page();
+
 
 
 int main(){
@@ -98,6 +99,7 @@ void seatmatrix_display(){
                 }
                 printf("\n");
             }
+            seat_selection();
             break;
         case 3:
             strcpy(stype, "Left half");
@@ -113,6 +115,7 @@ void seatmatrix_display(){
                 }
                 printf("\n");
             }
+            seat_selection();
             break;
         
         default:
@@ -274,7 +277,7 @@ void menu(){
     {
         case 1: date_menu(); break;
         case 2: team_menu(); break;
-        // case 3: location_menu(); break;
+        case 3: location_menu(); break;
         default: printf("Enter a valid choice !!"); menu();
     }
 
@@ -381,4 +384,54 @@ void date_selection(int c){
                 // getch();
                 date_menu();
         }
+    fclose(myFileStream);
     }
+
+    void location_menu(){
+        system("cls");
+        printf("\t Location Menu \n");
+        FILE *myfilestream = fopen("ipllocationmenu.txt","r");
+        int code;
+        while (fscanf(myfilestream,"%d %s", &code, match.location )==2)
+        {
+            printf("%4d. %-12s\n", code , match.location);
+        }
+    fclose(myfilestream);
+    int choice;
+    printf("\nEnter the number of your preferred");
+    scanf("%d",&choice);
+    system("cls");
+    location_selection(choice);
+    }
+
+void location_selection(int c){
+    FILE* myfile=fopen("ipllocationmenu.txt","r");
+    if (myfile == NULL) {
+
+        printf("File failed to open\n");
+
+    }
+    else
+    {
+        int code;
+        int flag = 1;
+        char  location[12];
+        while (fscanf(myfile, "%d %s ", &code, location) == 2)
+        {
+            if (c==code){
+                flag = 0;
+                FILE *myFileStream= fopen("ipldatemenu.txt","r");
+                while (fscanf(myFileStream, "%d %s %s %s %s", &code, match.matches, match.location, match.date, match.time) == 5)
+                {
+                    if(strcmp(location,match.location)==0) printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match.matches, match.location, match.date, match.time);
+                }
+            }
+        }
+        if (flag)
+        {
+            printf("\n\n No Match Found \n Please Try Again !!! \n");
+            // getch();
+            location_menu();
+        }
+    }
+}
