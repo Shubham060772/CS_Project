@@ -3,4 +3,4 @@
 2 PBKS_vs_DC Mohali 23-03-2024 14.30
 3 KKR_vs_SRH Kolkata 23-03-2024 19.30
 4 RR_vs_LSG Jaipur 24-03-2024 14.30
-5 MI_vs_GT Ahmedabad  24-03-2024  19.30
+5 MI_vs_GT Mumbai  24-03-2024  19.30
