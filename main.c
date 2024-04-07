@@ -23,15 +23,17 @@ customer c1,c2,c3;
 char stype[15];
 int arr[11][11];
 
-void welcome();
-void login();
-void menu();
-void date_menu();
+void welcome(); //done
+void login(); //done
+void admin_login();
+void menu(); //done
+void date_menu(); //done
 void team_menu();
 void location_menu();
-void date_selection(int c); 
-void seat_selection();
-void seatmatrix_display();
+void date_selection(int c);  //done
+void location_selection(int c); 
+void seat_selection(); //done
+void seatmatrix_display(); //done
 void payment_gateway();
 void print_bill();
 void display_snacks();
@@ -139,7 +141,7 @@ void seat_selection(){
     }
     else
     {
-        arr[row][col - 1] = 1;
+        arr[row][col] = 1;
         printf("Seat selected successfully\n");
     }
     for (int i = 0; i < 11; i++)
@@ -155,9 +157,10 @@ void seat_selection(){
                 printf("\n");
             }
 }
-printf("Do you want to book nore tickets? (Y/N)");
-char a= getchar();
-if(a=='y'||a=='Y'){
+printf("Do you want to book nore tickets? (Y/N)  \n");
+char a[2];
+scanf("%s",a);
+if(a[0] =='y'||a[0] =='Y'){
     system("cls");
     seatmatrix_display();
     }else{
@@ -316,11 +319,14 @@ void welcome(){
 
     for(int i=0;i<77;i++) printf("%c", 205 );printf("\n\n");
 
-    printf("\t\t 1.  Login");printf("\n");printf("\t\t");
+    printf("\t\t 1.Customer Login");printf("\n");printf("\t\t");
 
     for(int i=0;i<77;i++) printf("_" );printf("\n\n");
 
-    printf("\t\t 2.  Exit");printf("\n");printf("\t\t");
+    printf("\t\t 2. Admin Login");printf("\n");printf("\t\t");
+
+    for(int i=0;i<77;i++) printf("_" );printf("\n\n"); 
+    printf("\t\t 3.  Exit");printf("\n");printf("\t\t");
 
     for(int i=0;i<77;i++) printf("_" );printf("\n\n");
 
@@ -335,9 +341,14 @@ void welcome(){
         login();
         break;
     case 2:
+        // admin_login();
+        break;
+    case 3:
         exit(0);
         break;
     default:
+        printf("Enter a Valid Choice \n");
+        welcome();
         break;
     }
 
@@ -359,19 +370,15 @@ void date_selection(int c){
             if (c==code){
                 // return show_match_details(c);
             printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match.matches, match.location, match.date,  match.time);
-            printf("\nOpening windows for the selected match");
+            printf("\nOpening windows for the selected match\n");
             system("pause");
             system("cls");
             creating_seatmarix();
             seatmatrix_display();
             }
-            // else
-            // {
-            //     printf("\n\n No Match Found \n Please Try Again !!! \n");
-            //     // getch();
-            //     menu();
-            // }
         }
-        
+                printf("\n\n No Match Found \n Please Try Again !!! \n");
+                // getch();
+                date_menu();
         }
     }
