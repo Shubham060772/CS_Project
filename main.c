@@ -11,6 +11,7 @@ typedef struct IPL{
     int seat_sold;
     int empty_seat;
     char time[7];
+    double price;
  } IPL;
 IPL match;
 typedef struct customer
@@ -22,16 +23,25 @@ typedef struct customer
 customer c1,c2,c3;
 char stype[15]; // type of seat selected
 int arr[11][11]; // for seatmatrix
+typedef struct seat_booked{
+    int row[11];
+    int col[11];
+} seat_booked;
+seat_booked sb; // store the seat selected for booking
+int n=0;
 
 void welcome(); //done
 void login(); //done
-void admin_login();
-void menu(); //done
+void admin_login(); //done
+void admin_menu();
+void sub_menu(); //done
+void menu(); // done
 void date_menu(); //done
-void team_menu();
+void team_menu(); //
 void location_menu();
 void date_selection(int c);  //done
-void location_selection(int c); 
+void location_selection(int c);
+void creating_seatmarix(); 
 void seat_selection(); //done
 void seatmatrix_display(); //done
 void payment_gateway();
@@ -42,7 +52,6 @@ void customer_details();
 void cancel_ticket();
 void order_history();
 void end_page();
-void sub_menu();
 
 
 
@@ -82,7 +91,7 @@ void welcome(){
         login();
         break;
     case 2:
-        // admin_login();
+        admin_login();
         break;
     case 3:
         exit(0);
@@ -126,6 +135,39 @@ void login(){
     
     
 }
+void admin_login(){
+    char pass[20];
+    char id[9];
+    char userid[9]="2301AI44";
+    char password[20]="CS112PG32";
+    printf("\n\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 ); 
+    printf("\n");
+    printf("\t\t\t\t\t   ADMIN LOGIN PAGE");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 );
+    printf("\n\n");
+    printf("\t\t Enter Admin ID  : ");
+    scanf("%s", id);
+    printf("\n");
+    printf("\t\t Enter Password to login : ");
+    scanf("%s", pass);
+    system("cls");
+    // menu();
+    
+    if (strcmp(pass,password)!=0 || strcmp(userid,id)!=0)
+    {
+        printf("Wrong ID or password !!");
+        admin_login();
+        // exit(1);
+    }
+    else
+    {
+        // admin_menu();
+    }
+}
 void menu(){
     int choice;
     printf("\n\n");
@@ -133,6 +175,50 @@ void menu(){
     for(int i=0;i<77;i++) printf("%c", 205 );
     printf("\n");
     printf("\t\t\t\t\t     MAIN MENU");
+    printf("\n\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 ); 
+    printf("\n");
+
+    printf("\t\t 1. Book Tickets");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("\n\n");
+    printf("\t\t 2. Cancel Tickets");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("\n\n");
+    printf("\t\t 3. View order history");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("\n\n");
+    printf("\t\t 4.Exit");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("\n\n");
+    printf("Enter your choice : ");
+    scanf("%d",&choice);
+    system("cls");
+    switch (choice)
+    {
+        case 1: sub_menu(); break;
+        // case 2: cancel_ticket(); break;
+        // case 3: order_history(); break;
+        case 4: exit(0); break;
+        default: printf("Enter a valid choice !!"); menu();
+    }
+}
+void sub_menu(){
+    int choice;
+    printf("\n\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 );
+    printf("\n");
+    printf("\t\t\t\t\t     SELECTION MENU");
     printf("\n\n");
     printf("\t\t");
     for(int i=0;i<77;i++) printf("%c", 205 ); 
@@ -161,7 +247,7 @@ void menu(){
         case 1: date_menu(); break;
         case 2: team_menu(); break;
         case 3: location_menu(); break;
-        default: printf("Enter a valid choice !!"); menu();
+        default: printf("Enter a valid choice !!"); sub_menu();
     }
 
 }
@@ -285,7 +371,6 @@ void location_menu(){
     location_selection(choice);
     }
 
-
 void creating_seatmarix(){
         for (int i = 0; i < 11; i++)
             {
@@ -295,7 +380,6 @@ void creating_seatmarix(){
                 }
             }
 }
-
 void seatmatrix_display(){
         int choice;
         printf("1. Pavilion \n 2.Right half \n 3. Left half");
@@ -304,7 +388,7 @@ void seatmatrix_display(){
         switch (choice)
         {
         case 1:
-
+            match.price=1500;
             strcpy(stype, "Pavilion");
             for (int i = 0; i < 11; i++)
             {
@@ -321,6 +405,7 @@ void seatmatrix_display(){
             seat_selection();
             break;
         case 2:
+            match.price=1000;
             strcpy(stype, "Right half");
             for (int i = 0; i < 11; i++)
             {
@@ -337,6 +422,7 @@ void seatmatrix_display(){
             seat_selection();
             break;
         case 3:
+            match.price=1000;
             strcpy(stype, "Left half");
             for (int i = 0; i < 11; i++)
             {
@@ -364,6 +450,9 @@ void seat_selection()
     int row, col, tickets;
     printf("Nmber of tickets = ");
     scanf("%d", &tickets);
+    n=0;
+    match.ticketprice=tickets*(match.price);
+    
 
     while (tickets > 10 || tickets <= 0)
     {
@@ -375,7 +464,7 @@ void seat_selection()
         printf("Enter row and column respectively :");
         scanf("%d %d", &row, &col);
 
-        if (arr[row][col - 1] == 1)
+        if (arr[row][col] == 1)
         {
             printf("Seat is booked , select another seat\n");
             tickets++;
@@ -384,6 +473,10 @@ void seat_selection()
         {
             arr[row][col] = 1;
             printf("Seat selected successfully\n");
+            sb.row[n]=row;
+            sb.col[n]=col;
+            n++;
+
         }
         for (int i = 0; i < 11; i++)
         {
@@ -413,8 +506,9 @@ void seat_selection()
     }
     else
     {
-        printf("Generating your Bill");
-        print_bill();
+        char p='%';
+        printf("Total Amount : Rs. %f + 18 %c GST",match.ticketprice,p);
+        // print_bill();
     }
 }
 void location_selection(int c){
@@ -448,5 +542,13 @@ void location_selection(int c){
             // getch();
             location_menu();
         }
+    }
+}
+
+void print_bill(){
+    
+    for(int i =0;i<n;i++){ // printing the seat numbers
+        printf(" Row : %d  Column: %d ", sb.row[i],sb.col[i]);
+        // printf("\ncheck");
     }
 }
