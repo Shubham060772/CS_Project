@@ -48,6 +48,7 @@ void payment_gateway();
 void print_bill();
 void display_snacks();
 void snacks_bill();
+void save_details();
 void customer_details();
 void cancel_ticket();
 void order_history();
@@ -206,6 +207,49 @@ void menu(){
     switch (choice)
     {
         case 1: sub_menu(); break;
+        // case 2: cancel_ticket(); break;
+        // case 3: order_history(); break;
+        case 4: exit(0); break;
+        default: printf("Enter a valid choice !!"); menu();
+    }
+}
+void admin_menu(){
+    int choice;
+    printf("\n\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 );
+    printf("\n");
+    printf("\t\t\t\t\t     ADMIN MENU");
+    printf("\n\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 ); 
+    printf("\n");
+
+    printf("\t\t 1. EDIT MATCHES");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("\n\n");
+    printf("\t\t 2. ADD MATCHES ");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("\n\n");
+    printf("\t\t 3. DELETE MATCHES");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("\n\n");
+    printf("\t\t 4. EXIT");
+    printf("\n");
+    printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );
+    printf("Enter your choice : ");
+    scanf("%d",&choice);
+    system("cls");
+    switch (choice)
+    {
+        // case 1: sub_menu(); break;
         // case 2: cancel_ticket(); break;
         // case 3: order_history(); break;
         case 4: exit(0); break;
@@ -507,8 +551,10 @@ void seat_selection()
     else
     {
         char p='%';
-        printf("Total Amount : Rs. %f + 18 %c GST",match.ticketprice,p);
+        printf("Total Amount : Rs. %f + 18 %c GST\n",match.ticketprice,p);
         // print_bill();
+        system("pause");
+        payment_gateway();
     }
 }
 void location_selection(int c){
@@ -544,11 +590,112 @@ void location_selection(int c){
         }
     }
 }
-
+void payment_gateway(){
+    system("cls");
+    int choice;
+    float amount=(match.ticketprice+match.ticketprice*18/100.0);
+    printf("\n\n Amount to be  paid is Rs. %.2f \n",amount);
+    printf("\n\n Select Payment Method: ");
+    printf("\n 1. UPI Payment \n 2. Net Banking/E-Wallet \n 3. Debit Card \n 4. Credit Card\n");
+    printf("Enter Your  Choice : ");
+    scanf("%d",&choice);
+    switch (choice)
+    {
+    case 1:
+        // upi_payment();
+        break;
+    case 2:
+        // netbanking();
+        break;
+    case 3:
+        // debitcard();
+        break;
+    case 4:
+        // creditcard();
+        break;
+    default:
+        break;
+    }
+    print_bill();
+}
 void print_bill(){
-    
+    printf("Enter Your Name :");
+    scanf("%s",c1.name);
     for(int i =0;i<n;i++){ // printing the seat numbers
-        printf(" Row : %d  Column: %d ", sb.row[i],sb.col[i]);
+        printf(" %d-%d ", sb.row[i],sb.col[i]);
         // printf("\ncheck");
+    }
+    system("cls");
+    save_details();
+    // end_page();
+}
+void save_details(){
+    FILE *myFileStream= fopen("customerdetails.txt","a+");
+    fprintf(myFileStream,"%s %d",c1.name,c1.number);
+}
+
+void end_page (){
+
+
+    printf("\t\t");
+    for (int i = 0; i < 77; i++)
+        printf("%c", 205);
+    printf("\n");
+
+    printf("\t\t\t\t     Thank you for trusting our services");
+    printf("\n");
+    printf("\t\t");
+    
+
+    for (int i = 0; i < 77; i++)
+        printf("%c", 205);
+    printf("\n\n");
+
+    printf("\t\t 1.Book Again");
+    printf("\n");
+    printf("\t\t");
+
+    for (int i = 0; i < 77; i++)
+        printf("_");
+    printf("\n\n");
+
+    printf("\t\t 2.Print Again");
+    printf("\n");
+    printf("\t\t");
+
+    for (int i = 0; i < 77; i++)
+        printf("_");
+    printf("\n\n");
+
+     printf("\t\t 3.Exit");
+    printf("\n");
+    printf("\t\t");
+
+    for (int i = 0; i < 77; i++)
+        printf("_");
+    printf("\n\n");
+
+    printf("\t\t\t\t Enter your Choice :");
+
+    int choice;
+    scanf("%d", &choice);
+    system("cls");
+    // system("clear");
+
+    switch (choice)
+    {
+    case 1:
+        // welcome();
+        break;
+    case 2:
+        // print_bill();
+        break;
+    case 3:
+        // exit(0);
+        break;
+    default:
+        printf("Enter a Valid Choice \n");
+        end_page();
+        break;
     }
 }
