@@ -21,6 +21,7 @@ typedef struct customer
     int number;
 }customer;
 customer c1,c2,c3;
+int customerid=0;
 char stype[15]; // type of seat selected
 int arr[11][11]; // for seatmatrix
 typedef struct seat_booked{
@@ -33,7 +34,7 @@ int n=0;
 void welcome(); //done
 void login(); //done
 void admin_login(); //done
-void admin_menu();
+void admin_menu(); //done
 void sub_menu(); //done
 void menu(); // done
 void date_menu(); //done
@@ -44,21 +45,21 @@ void location_selection(int c);
 void creating_seatmarix(); 
 void seat_selection(); //done
 void seatmatrix_display(); //done
-void payment_gateway(); 
-void netbanking(double amount);
-void creditcard(double amount);
-void debitcard(double amount);
+void payment_gateway();  //done
+void netbanking(double amount);  //done
+void creditcard(double amount);    //done
+void debitcard(double amount);    //done
 void upi_paymemt(double amount); //done
-void print_bill();
+void print_bill();    //done
 void display_snacks();
 void snacks_bill();
-void save_details();
+void save_details();    //done
 void customer_details();
 void cancel_ticket();
 void order_history();
 void contactus();
 void aboutus();
-void end_page();
+void end_page();    //done by sahil;
 
 
 
@@ -627,19 +628,63 @@ void payment_gateway(){
     // print_bill();
 }
 void print_bill(){
+    printf("\t\t\t Bill");
+    printf("\t\t\n");
+    for(int i=0;i<77;i++) printf("%c", 205 );printf("\n");
+    printf("\t\tName-       %s ", c1.name);
+    // printf("\nMatch ID      %d", match.id);
+    printf("\n\t\tTeam-       %s",match.matches);
+    printf("\n\t\tDate\t-   %s", match.date);
+    printf("\n\t\tTime\t-   %s", match.time);
+    printf("\n\t\tVenue-      %s", match.location);
+    
+    printf("\n\t\tSeat Details:");
     for(int i =0;i<n;i++){ // printing the seat numbers
-        printf(" %d-%d ", sb.row[i],sb.col[i]);
-        // printf("\ncheck");
+        printf(" %d-%d, ", sb.row[i],sb.col[i]);
     }
+    printf("\n\t\tTicket Price:  Rs.%.2f", match.ticketprice);
+    printf("\n\t\tService Tax:  18%% [Rs.%.2f]", match.ticketprice * 18 / 100.0);
+    printf("\n\t\tTotal:        Rs.%.2f", match.ticketprice+match.ticketprice * 18 / 100.0);
+      printf("\t\t\n");
+    for(int i=0;i<77;i++) printf("%c", 205 );printf("\n");
+    // printf("\n\t\tPayment Mode:  ");
+    // if(upi_paymemt == true) printf("UPI Payment");
+    //  if(netbanking == true) printf("Net Banking/ E-Wallet");
+    // else if(debitcard == true) printf("Debit Card");
+    printf("\t\t\tThank You!\n\n\n");
+    // printf("\n For any Query Contact Us at shubham_ai44@iitp.ac.in");
+    // printf("\n\n www.cricketcouncilofindia.org \n www.iccworldcup.com");
+    // printf("\n\n Developed by : Shubham Agrawal (CS112PG32)");
+    // getch();
     system("pause");
     system("cls");
     save_details();
-    // end_page();
+    printf("What to Order Snacks ? (Y/N)");
+    char choice[2];
+    scanf(" %s", &choice);
+    if(choice[0]=='y'||choice[0]=='Y'){
+        // orderSnacks();
+    }else{
+        
+    end_page();
+    }
 }
 void save_details(){
+    customerid++;
     FILE *myFileStream= fopen("customerdetails.txt","a+");
-    fprintf(myFileStream,"%s %d",c1.name,c1.number);
+    int check;
+    char s[15];
+    int n,count=0;
+    while(fscanf(myFileStream,"%d %s %s",&check,s,&n)==3){
+        count++;
+    }
+    if(customerid<check)customerid=check+1;
+    fprintf(myFileStream,"%d %s %d \n",customerid,c1.name,c1.number);
+    FILE *fp=fopen("orderhistory.txt","a");
+    fprintf(fp,"%d %s %s %s \n",customerid,match.matches,match.date,match.location);
+
 }
+
 void upi_payment(double  amount){
     char vcode[6];
     char vpa[15];
@@ -702,6 +747,7 @@ void creditcard(double amount){
     }
 }
 
+
 void end_page (){
 
 
@@ -753,13 +799,13 @@ void end_page (){
     switch (choice)
     {
     case 1:
-        // welcome();
+        welcome();
         break;
     case 2:
-        // print_bill();
+        print_bill();
         break;
     case 3:
-        // exit(0);
+        exit(0);
         break;
     default:
         printf("Enter a Valid Choice \n");
