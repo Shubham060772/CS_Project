@@ -44,7 +44,11 @@ void location_selection(int c);
 void creating_seatmarix(); 
 void seat_selection(); //done
 void seatmatrix_display(); //done
-void payment_gateway();
+void payment_gateway(); 
+void netbanking(double amount);
+void creditcard(double amount);
+void debitcard(double amount);
+void upi_paymemt(double amount); //done
 void print_bill();
 void display_snacks();
 void snacks_bill();
@@ -52,6 +56,8 @@ void save_details();
 void customer_details();
 void cancel_ticket();
 void order_history();
+void contactus();
+void aboutus();
 void end_page();
 
 
@@ -592,8 +598,10 @@ void location_selection(int c){
 }
 void payment_gateway(){
     system("cls");
+    printf("Enter Your Name :");
+    scanf("%s",c1.name);
     int choice;
-    float amount=(match.ticketprice+match.ticketprice*18/100.0);
+    double amount=(match.ticketprice+match.ticketprice*18/100.0);
     printf("\n\n Amount to be  paid is Rs. %.2f \n",amount);
     printf("\n\n Select Payment Method: ");
     printf("\n 1. UPI Payment \n 2. Net Banking/E-Wallet \n 3. Debit Card \n 4. Credit Card\n");
@@ -602,29 +610,28 @@ void payment_gateway(){
     switch (choice)
     {
     case 1:
-        // upi_payment();
+        upi_payment(amount);
         break;
     case 2:
-        // netbanking();
+        netbanking(amount);
         break;
     case 3:
-        // debitcard();
+        debitcard(amount);
         break;
     case 4:
-        // creditcard();
+        // creditcard(amount);
         break;
     default:
         break;
     }
-    print_bill();
+    // print_bill();
 }
 void print_bill(){
-    printf("Enter Your Name :");
-    scanf("%s",c1.name);
     for(int i =0;i<n;i++){ // printing the seat numbers
         printf(" %d-%d ", sb.row[i],sb.col[i]);
         // printf("\ncheck");
     }
+    system("pause");
     system("cls");
     save_details();
     // end_page();
@@ -632,6 +639,67 @@ void print_bill(){
 void save_details(){
     FILE *myFileStream= fopen("customerdetails.txt","a+");
     fprintf(myFileStream,"%s %d",c1.name,c1.number);
+}
+void upi_payment(double  amount){
+    char vcode[6];
+    char vpa[15];
+    int c;
+    printf("Enter VPA ID : ");
+    scanf("%s",vpa);
+    printf("\n Enter Verification Code : ");
+    scanf("%s",vcode);
+    printf("\n Payment Succesfull \n");
+    print_bill();
+}
+
+void netbanking(double amount){
+    char  accno[20] ;
+    printf("\n Net Banking Payment\n");
+    printf("Account Number : ");
+    scanf("%s",accno);
+    printf("\n Transaction Id :  3789654321\n");
+    printf("\n Payment Successful.\n");
+    print_bill();
+}
+
+void debitcard(double amount) {
+    char nameOnCard[30];
+    long cardNumber;
+    char expiryDate[5];
+    printf("\n Debit Card Payment\n");
+    printf("Name On The Card : ");
+    gets(nameOnCard);
+    printf("Card Number : ");
+    scanf("%ld",&cardNumber);
+    printf("Expiry Date (MM/YY) : ");
+    scanf("%s",expiryDate);
+    if ((strlen(expiryDate) != 4) ) {
+        printf("\n Invalid Expiry Date Format! Please enter in format MM/YY.");
+        debitcard(amount);
+    } else{
+        printf("\n Payment Successful.\n");
+        print_bill();
+    }
+}
+
+void creditcard(double amount){
+    char nameOnCard[30];
+    long cardNumber;
+    char expiryDate[5];
+    printf("\n Credit Card Payment\n");
+    printf("Name On The Card : ");
+    gets(nameOnCard);
+    printf("Card Number : ");
+    scanf("%ld",&cardNumber);
+    printf("Expiry Date (MM/YY) : ");
+    scanf("%s",expiryDate);
+    if ((strlen(expiryDate) != 4) ) {
+        printf("\n Invalid Expiry Date Format! Please enter in format MM/YY.");
+        creditcard(amount);
+    } else{
+        printf("\n Payment Successful.\n");
+        print_bill();
+    }
 }
 
 void end_page (){
