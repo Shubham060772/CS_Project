@@ -51,8 +51,8 @@ void creditcard(double amount);    //done
 void debitcard(double amount);    //done
 void upi_paymemt(double amount); //done
 void print_bill();    //done
-void display_snacks();
-void snacks_bill();
+void display_snacks(); // done by ayush
+void snacks_bill(); // done by
 void save_details();    //done
 void customer_details();
 void cancel_ticket();
@@ -214,7 +214,7 @@ void menu(){
     switch (choice)
     {
         case 1: sub_menu(); break;
-        // case 2: cancel_ticket(); break;
+        case 2: cancel_ticket(); break;
         // case 3: order_history(); break;
         case 4: exit(0); break;
         default: printf("Enter a valid choice !!"); menu();
@@ -632,14 +632,14 @@ void print_bill(){
     printf("\t\t\n");
     for(int i=0;i<77;i++) printf("%c", 205 );printf("\n");
     printf("\t\tName-       %s ", c1.name);
-    // printf("\nMatch ID      %d", match.id);
+    // printf("\nMatch ID      %d;;", match.id);;
     printf("\n\t\tTeam-       %s",match.matches);
     printf("\n\t\tDate\t-   %s", match.date);
     printf("\n\t\tTime\t-   %s", match.time);
     printf("\n\t\tVenue-      %s", match.location);
     
     printf("\n\t\tSeat Details:");
-    for(int i =0;i<n;i++){ // printing the seat numbers
+    for(int i =0;i<n;i++){ // printing the seat numbers;
         printf(" %d-%d, ", sb.row[i],sb.col[i]);
     }
     printf("\n\t\tTicket Price:  Rs.%.2f", match.ticketprice);
@@ -648,13 +648,13 @@ void print_bill(){
       printf("\t\t\n");
     for(int i=0;i<77;i++) printf("%c", 205 );printf("\n");
     // printf("\n\t\tPayment Mode:  ");
-    // if(upi_paymemt == true) printf("UPI Payment");
-    //  if(netbanking == true) printf("Net Banking/ E-Wallet");
-    // else if(debitcard == true) printf("Debit Card");
+    // if(upi_paymemt == true); printf("UPI Payment");;
+    //  if(netbanking == true); printf("Net Banking/ E-Wallet");;
+    // else if(debitcard == true); printf("Debit Card");;
     printf("\t\t\tThank You!\n\n\n");
-    // printf("\n For any Query Contact Us at shubham_ai44@iitp.ac.in");
-    // printf("\n\n www.cricketcouncilofindia.org \n www.iccworldcup.com");
-    // printf("\n\n Developed by : Shubham Agrawal (CS112PG32)");
+    // printf("\n For any Query Contact Us at shubham_ai44@iitp.ac.in");;
+    // printf("\n\n www.cricketcouncilofindia.org ;;\n www.iccworldcup;;.com");;
+    // printf("\n\n Developed by ; Shubham Agrawal (CS112PG32)");;
     // getch();
     system("pause");
     system("cls");
@@ -663,7 +663,7 @@ void print_bill(){
     char choice[2];
     scanf(" %s", &choice);
     if(choice[0]=='y'||choice[0]=='Y'){
-        // orderSnacks();
+        // display_snacks();
     }else{
         
     end_page();
@@ -682,7 +682,8 @@ void save_details(){
     fprintf(myFileStream,"%d %s %d \n",customerid,c1.name,c1.number);
     FILE *fp=fopen("orderhistory.txt","a");
     fprintf(fp,"%d %s %s %s \n",customerid,match.matches,match.date,match.location);
-
+    fclose(myFileStream);
+    fclose(fp);
 }
 
 void upi_payment(double  amount){
@@ -745,6 +746,93 @@ void creditcard(double amount){
         printf("\n Payment Successful.\n");
         print_bill();
     }
+}
+
+// Function to display the list of snacks with their prices
+void display_snacks() {
+    int *choices = malloc(100 * sizeof(int));
+    int *quantities = malloc(100 * sizeof(int));
+    if (choices == NULL || quantities == NULL) {
+        printf("Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int num_items = 0;
+    char buyMore;
+
+    printf("Snacks Menu:\n");
+    printf("1. Chips            - Rs. 20\n");
+    printf("2. Chocolate Bar    - Rs. 30\n");
+    printf("3. Popcorn          - Rs. 25\n");
+    printf("4. Soda             - Rs. 15\n");
+    printf("5. Sandwich         - Rs. 50\n");
+    printf("6. Samosa           - Rs. 10\n");
+    printf("7. Ice Cream        - Rs. 35\n");
+    printf("8. Pizza Slice      - Rs. 40\n");
+    printf("9. Burger           - Rs. 45\n");
+    printf("10. French Fries    - Rs. 25\n");
+
+    do {
+        // select a snack and quantity
+        int choice, quantity;
+        printf("\nSelect the Snack to buy:  ");
+        while (scanf("%d", &choice) != 1 || choice < 1 || choice > 10) {
+            printf("Invalid input.");
+            while(getchar() != '\n'); // Clear input 
+        }
+
+        printf("Enter the quantity: ");
+        while (scanf("%d", &quantity) != 1 || quantity < 1) {
+            printf("Invalid input. ");
+            while(getchar() != '\n'); // Clear input 
+        }
+
+        // Storing user choices
+        choices[num_items] = choice;
+        quantities[num_items] = quantity;
+        num_items++;
+
+        // Buy more snacks or not
+        printf("Do you want to buy more snacks? (y/n): ");
+        while (scanf(" %c", &buyMore) != 1 || (buyMore != 'y' && buyMore != 'Y' && buyMore != 'n' && buyMore != 'N')) {
+            printf("Invalid input. Please enter 'y' for Yes or 'n' for No: ");
+            while(getchar() != '\n'); // Clear input
+        }
+    } while(buyMore == 'y' || buyMore == 'Y');
+
+    // Displaying the bill
+    display_bill(choices, quantities, num_items);
+
+    // Free dynamically allocated memory
+    free(choices);
+    free(quantities);
+}
+
+// Function to calculate and display the bill
+void display_bill(int choices[], int quantities[], int num_items) {
+    float total = 0;
+    printf("\nYour Bill:\n");
+    printf("Snack        Quantity      Price\n");
+    printf("-------------------------------------------------------\n");
+    for (int i = 0; i < num_items; i++) {
+        float price;
+        switch(choices[i]) {
+            case 1: price = 20.0; printf("Chips             "); break;
+            case 2: price = 30.0; printf("Chocolate Bar     "); break;
+            case 3: price = 25.0; printf("Popcorn           "); break;
+            case 4: price = 15.0; printf("Soda              "); break;
+            case 5: price = 50.0; printf("Sandwich          "); break;
+            case 6: price = 10.0; printf("Samosa            "); break;
+            case 7: price = 35.0; printf("Ice Cream         "); break;
+            case 8: price = 40.0; printf("Pizza Slice       "); break;
+            case 9: price = 45.0; printf("Burger            "); break;
+            case 10: price = 25.0; printf("French Fries      "); break;
+        }
+        printf("          %d           Rs. %.2f\n", quantities[i], price * quantities[i]);
+        total += price * quantities[i];
+    }
+    printf("-------------------------------------------------------\n");
+    printf("Total:                                  Rs. %.2f\n", total);
 }
 
 
@@ -812,4 +900,40 @@ void end_page (){
         end_page();
         break;
     }
+}
+
+void order_history(){
+
+    printf("**********ORDER HISTORY*********\n");
+    FILE *fp = fopen("orderhistory.txt","r");
+    while(fscanf(fp,"%d %s %s %s \n",&customerid,match.matches,match.date,match.location)==4){
+        printf("%d  %s %s %s \n",customerid,match.matches,match.date,match.location);
+        // printf("+");
+    }
+    fclose (fp);
+}
+
+void cancel_ticket(){
+    order_history();
+    int id;
+    printf("\n\nEnter the ID of the ticket");
+    scanf("%d",&id);
+    FILE *fp = fopen("orderhistory.txt","r");
+    FILE*fp2=fopen("temp.txt","a");
+    char line[100];
+    int tempid;
+    while(fscanf(fp,"%d %s %s %s \n",&customerid,match.matches,match.date,match.location)==4){
+        if(id!=customerid){
+            fprintf(fp2,"%d %s %s %s \n",customerid,match.matches,match.date,match.location);
+        }
+        else printf("Following Order is Removed : \n \t\t %d %s %s %s \n",customerid,match.matches,match.date,match.location);
+        // printf("+");
+    }
+    fclose (fp);
+    fclose (fp2);
+    remove("orderhistory.txt");
+    rename("temp.txt","orderhistory.txt");
+    printf("\n\n Order is Cancelled Succesfully !!");
+    printf("\nAmount will be to credited to your Account in 7 working Days\n\n");
+    order_history();
 }
