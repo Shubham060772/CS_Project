@@ -50,21 +50,25 @@ void netbanking(double amount);  //done
 void creditcard(double amount);    //done
 void debitcard(double amount);    //done
 void upi_paymemt(double amount); //done
-void print_bill();    //done
+void print_bill();    //done // needs formatting
 void display_snacks(); // done by ayush
-void snacks_bill(); // done by
-void save_details();    //done
+void snacks_bill(); // done by ayush
+void save_details();    //done // include seat details
 void customer_details();
-void cancel_ticket();
-void order_history();
-void contactus();
-void aboutus();
+void cancel_ticket(); // code done needs formating 
+void order_history(); // done
+void add_matches(); // done
+void delete_matches(); // done
+void contactUs(); // done by sahil
+void aboutUs(); //done by sahil
 void end_page();    //done by sahil;
 
 
 
 
 int main(){
+    
+   aboutUs();
    welcome();
    return 0;
 }
@@ -173,7 +177,7 @@ void admin_login(){
     }
     else
     {
-        // admin_menu();
+        admin_menu();
     }
 }
 void menu(){
@@ -215,7 +219,7 @@ void menu(){
     {
         case 1: sub_menu(); break;
         case 2: cancel_ticket(); break;
-        // case 3: order_history(); break;
+        case 3: order_history(); break;
         case 4: exit(0); break;
         default: printf("Enter a valid choice !!"); menu();
     }
@@ -232,22 +236,22 @@ void admin_menu(){
     for(int i=0;i<77;i++) printf("%c", 205 ); 
     printf("\n");
 
-    printf("\t\t 1. EDIT MATCHES");
+    // printf("\t\t 1. EDIT MATCHES");
+    // printf("\n");
+    // printf("\t\t");
+    // for(int i=0;i<77;i++) printf("_" );
+    // printf("\n\n");
+    printf("\t\t 1. ADD MATCHES ");
     printf("\n");
     printf("\t\t");
     for(int i=0;i<77;i++) printf("_" );
     printf("\n\n");
-    printf("\t\t 2. ADD MATCHES ");
+    printf("\t\t 2. DELETE MATCHES");
     printf("\n");
     printf("\t\t");
     for(int i=0;i<77;i++) printf("_" );
     printf("\n\n");
-    printf("\t\t 3. DELETE MATCHES");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
-    printf("\t\t 4. EXIT");
+    printf("\t\t 3. EXIT");
     printf("\n");
     printf("\t\t");
     for(int i=0;i<77;i++) printf("_" );
@@ -256,11 +260,11 @@ void admin_menu(){
     system("cls");
     switch (choice)
     {
-        // case 1: sub_menu(); break;
-        // case 2: cancel_ticket(); break;
+        case 1: add_matches(); break;
+        case 2: delete_matches(); break;
         // case 3: order_history(); break;
-        case 4: exit(0); break;
-        default: printf("Enter a valid choice !!"); menu();
+        case 3: exit(0); break;
+        default: printf("Enter a valid choice !!"); admin_menu();
     }
 }
 void sub_menu(){
@@ -663,7 +667,7 @@ void print_bill(){
     char choice[2];
     scanf(" %s", &choice);
     if(choice[0]=='y'||choice[0]=='Y'){
-        // display_snacks();
+        display_snacks();
     }else{
         
     end_page();
@@ -833,6 +837,7 @@ void display_bill(int choices[], int quantities[], int num_items) {
     }
     printf("-------------------------------------------------------\n");
     printf("Total:                                  Rs. %.2f\n", total);
+    end_page();
 }
 
 
@@ -869,7 +874,14 @@ void end_page (){
         printf("_");
     printf("\n\n");
 
-     printf("\t\t 3.Exit");
+     printf("\t\t 3.Contact US");
+    printf("\n");
+    printf("\t\t");
+     for (int i = 0; i < 77; i++)
+        printf("_");
+    printf("\n\n");
+
+     printf("\t\t 4.Exit");
     printf("\n");
     printf("\t\t");
 
@@ -893,6 +905,10 @@ void end_page (){
         print_bill();
         break;
     case 3:
+        // exit(0);
+        contactUs();
+        break;
+    case 4:
         exit(0);
         break;
     default:
@@ -936,4 +952,150 @@ void cancel_ticket(){
     printf("\n\n Order is Cancelled Succesfully !!");
     printf("\nAmount will be to credited to your Account in 7 working Days\n\n");
     order_history();
+}
+void add_matches(){
+    FILE *fp=fopen("ipldatemenu.txt","a+");
+    int code,count=0;
+    char match[12],location[12],date[15],time[7];
+    char m[20],l[12],d[15],t[7];
+    printf("Enter Match :");
+    scanf("%s",match);
+    printf("Enter Date :");
+    scanf("%s",date);
+    printf("Enter Location :");
+    scanf("%s",location);
+    printf("Enter time :");
+    scanf("%s",time);
+    while (fscanf(fp,"%d %s %s %s %s",&code,m,l,d,t)==5 )
+    {
+        count++;
+        printf("%d ",count);
+    }
+    fprintf(fp,"%d %s %s %s %s",count,match,location,date,time);
+}
+
+void delete_matches(){
+    FILE *myFileStream = fopen("ipldatemenu.txt", "r");
+    if (myFileStream == NULL) {
+
+        printf("File failed to open\n");
+
+    }
+    else{
+
+        int code;
+        char match[12],location[12],date[15],time[7];
+        while (fscanf(myFileStream, "%d %s %s %s %s", &code, match, location, date, time) == 5){
+            printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match, location, date, time);
+        }
+    }
+    fclose(myFileStream);
+    int id;
+    int matchid;
+    printf("\n\nEnter the ID of the Match : ");
+    scanf("%d",&id);
+    FILE *fp = fopen("ipldatemenu.txt","r");
+    FILE*fp2=fopen("temp2.txt","a");
+    char line[100];
+    int tempid;
+    while(fscanf(fp,"%d %s %s %s %s \n",&matchid,match.matches,match.date,match.location,match.time)==5){
+        if(id!=matchid){
+            fprintf(fp2,"%d %s %s %s %s \n",matchid,match.matches,match.date,match.location,match.time);
+        }
+        else printf("Following Match is Removed : \n \t\t %d %s %s %s %s \n",matchid,match.matches,match.date,match.location,match.time);
+        // printf("+");
+    }
+    fclose (fp);
+    fclose (fp2);
+    remove("ipldatemenu.txt");
+    rename("temp2.txt","ipldatemenu.txt");
+    printf("\n\n Match is Deleted Succesfully !!");
+    FILE *fs = fopen("ipldatemenu.txt", "r");
+         int code;
+        char match[12],location[12],date[15],time[7];
+        while (fscanf(fs, "%d %s %s %s %s", &code, match, location, date, time) == 5){
+            printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match, location, date, time);
+        }
+
+    printf("Want to delete more Matches ? (Y/N)");
+    char c;
+    scanf("%c",c);
+    if (c=='Y'||c=="y")
+    {
+        delete_matches();
+    }
+    else
+    {
+        admin_menu();
+    }
+    
+    
+    // printf("\nAmount will be to credited to your Account in 7 working Days\n\n");
+}
+
+void aboutUs() {
+    printf("\n");
+    printf("\t\t+---------------------------------------------------------------------------+\n");
+    printf("\t\t|                         About Our Company                                 |\n");
+    printf("\t\t+---------------------------------------------------------------------------+\n");
+    printf("\t\t|                                                                           |\n");
+    printf("\t\t|                Welcome to our CS Project Group 32!                        |\n");
+    printf("\t\t|                                                                           |\n");
+    printf("\t\t|                We created a platform for booking                          |\n");
+    printf("\t\t|                   your favouite match tickets                             |\n");
+    printf("\t\t|                                                                           |\n");
+    printf("\t\t|               Our mission is to deliver quality experience                |\n");
+    printf("\t\t|                that exceed our customers' expectations.                   |\n");
+    printf("\t\t|                                                                           |\n");
+    printf("\t\t|                     Thank you for choosing us!                            |\n");
+    printf("\t\t|                                                                           |\n");
+    printf("\t\t+---------------------------------------------------------------------------+\n");
+    system("pause");
+    system("cls");
+}
+void contactUs() {
+    printf("\n");
+    printf("+---------------------------------------------------------------------------+\n");
+    printf("|                            Contact Us                                     |\n");
+    printf("+---------------------------------------------------------------------------+\n");
+    printf("|                                                                           |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shaikh sahil                                                       |\n");
+    printf("|  Email: Shaikh_2301cs76@iitp.ac.in                                        |\n");
+    printf("|  Roll No: 2301CS76                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|  Name: Shubham Agrawal                                                    |\n");
+    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("|  Roll No: 2301AI44                                                        |\n");
+    printf("|                                                                           |\n");
+    printf("|                                                                           |\n");
+    printf("+---------------------------------------------------------------------------+\n\n");
 }
