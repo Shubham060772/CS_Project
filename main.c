@@ -21,6 +21,7 @@ typedef struct customer
     int number;
 }customer;
 customer c1,c2,c3;
+double amount;
 int customerid=0;
 char stype[15]; // type of seat selected
 int arr[11][11]; // for seatmatrix
@@ -39,10 +40,10 @@ void sub_menu(); //done
 void menu(); // done
 void date_menu(); //done
 void team_menu(); //
-void location_menu();
+void location_menu(); //done
 void date_selection(int c);  //done
 void location_selection(int c);
-void creating_seatmarix(); 
+void creating_seatmarix(); //done 
 void seat_selection(); //done
 void seatmatrix_display(); //done
 void payment_gateway();  //done
@@ -284,12 +285,12 @@ void sub_menu(){
     printf("\t\t");
     for(int i=0;i<77;i++) printf("_" );
     printf("\n\n");
-    printf("\t\t 2. Select Match according to Team");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
-    printf("\t\t 3. Select Match according to Location");
+    // printf("\t\t 2. Select Match according to Team");
+    // printf("\n");
+    // printf("\t\t");
+    // for(int i=0;i<77;i++) printf("_" );
+    // printf("\n\n");
+    printf("\t\t 2. Select Match according to Location");
     printf("\n");
     printf("\t\t");
     for(int i=0;i<77;i++) printf("_" );
@@ -300,8 +301,8 @@ void sub_menu(){
     switch (choice)
     {
         case 1: date_menu(); break;
-        case 2: team_menu(); break;
-        case 3: location_menu(); break;
+        // case 2: team_menu(); break;
+        case 2: location_menu(); break;
         default: printf("Enter a valid choice !!"); sub_menu();
     }
 
@@ -371,44 +372,44 @@ void date_selection(int c){
         }
     fclose(myFileStream);
     }
-void team_menu(){
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\n\n");
-    printf("\t\t\t\t\t     TEAM MENU");
-    printf("\n\n");
-     printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\n");
-    FILE *myFileStream = fopen("iplteammenu.txt", "r");
-    if (myFileStream == NULL) {
+//void team_menu(){
+//     printf("\t\t");
+//     for(int i=0;i<77;i++) printf("%c", 205 );
+//     printf("\n\n");
+//     printf("\t\t\t\t\t     TEAM MENU");
+//     printf("\n\n");
+//      printf("\t\t");
+//     for(int i=0;i<77;i++) printf("%c", 205 );
+//     printf("\n");
+//     FILE *myFileStream = fopen("iplteammenu.txt", "r");
+//     if (myFileStream == NULL) {
 
-        printf("File failed to open\n");
+//         printf("File failed to open\n");
 
-    }
-    else{
+//     }
+//     else{
 
-        // int code;
-        char code[2],team[20];
-        while (fscanf(myFileStream, "%s %s",code , team) == 2){
-            printf("\t\t%4s. %-12s\n", code, team);
-        }
-    fclose(myFileStream);   
-    printf("\n\n");
-    }
-    int choice;
-    printf("\t\tEnter Code of Your  Team: ");
-    scanf("%s",&choice);
-    system("cls");
-    switch (choice)
-    {
-    case 1:
-        break;
+//         // int code;
+//         char code[2],team[20];
+//         while (fscanf(myFileStream, "%s %s",code , team) == 2){
+//             printf("\t\t%4s. %-12s\n", code, team);
+//         }
+//     fclose(myFileStream);   
+//     printf("\n\n");
+//     }
+//     int choice;
+//     printf("\t\tEnter Code of Your  Team: ");
+//     scanf("%s",&choice);
+//     system("cls");
+//     switch (choice)
+//     {
+//     case 1:
+//         break;
     
-    default:
-        break;
-    }
-}
+//     default:
+//         break;
+//     }
+// }
 void location_menu(){
         system("cls");
         printf("\t Location Menu \n");
@@ -422,6 +423,7 @@ void location_menu(){
     int choice;
     printf("\nEnter the number of your preferred");
     scanf("%d",&choice);
+    // system("pause");
     system("cls");
     location_selection(choice);
     }
@@ -437,7 +439,7 @@ void creating_seatmarix(){
 }
 void seatmatrix_display(){
         int choice;
-        printf("1. Pavilion \n 2.Right half \n 3. Left half");
+        printf(" 1.Pavilion (Price - 1500/-)\n 2.Right half (Price - 1000/-)\n 3. Left half (Price - 1000/-)");
         printf("\n Enter Your Choice :");
         scanf("%d",&choice);
         switch (choice)
@@ -509,63 +511,66 @@ void seat_selection()
     match.ticketprice=tickets*(match.price);
     
 
-    while (tickets > 10 || tickets <= 0)
+    if (tickets > 100 || tickets <= 0)
     {
-        printf("Invalid number\nPlease enter a number between 1 and 10:\n");
-        printf("Number of tickets = ");
+        printf("Invalid number\nPlease enter a number between 1 and 100:\n");
+        // printf("Number of tickets = ");
+        seat_selection();
     }
-    while (tickets--)
+    else
     {
-        printf("Enter row and column respectively :");
-        scanf("%d %d", &row, &col);
-
-        if (arr[row][col] == 1)
+        while (tickets--)
         {
-            printf("Seat is booked , select another seat\n");
-            tickets++;
-        }
-        else
-        {
-            arr[row][col] = 1;
-            printf("Seat selected successfully\n");
-            sb.row[n]=row;
-            sb.col[n]=col;
-            n++;
+            printf("Enter row and column respectively :");
+            scanf("%d %d", &row, &col);
 
-        }
-        for (int i = 0; i < 11; i++)
-        {
-
-            for (int j = 0; j < 11; j++)
+            if (arr[row][col] == 1)
             {
-                if (j == 0 && i != 10)
-                    printf(" %d| ", i);
-                else if (i == 10 && j != 0)
-                    printf(" %d ", j);
-                else if (arr[i][j] == 0)
-                    printf(" _ ");
-                else
-                    printf(" X ");
+                printf("Seat is booked , select another seat\n");
+                tickets++;
             }
-            printf("\n");
+            else
+            {
+                arr[row][col] = 1;
+                printf("Seat selected successfully\n");
+                sb.row[n] = row;
+                sb.col[n] = col;
+                n++;
+            }
+            for (int i = 0; i < 11; i++)
+            {
+
+                for (int j = 0; j < 11; j++)
+                {
+                    if (j == 0 && i != 10)
+                        printf(" %d| ", i);
+                    else if (i == 10 && j != 0)
+                        printf(" %d ", j);
+                    else if (arr[i][j] == 0)
+                        printf(" _ ");
+                    else
+                        printf(" X ");
+                }
+                printf("\n");
+            }
         }
     }
-    printf("Do you want to book nore tickets? (Y/N)  \n");
+    printf("Do you want to Confirm tickets? (Y/N)  \n");
     char a[2];
     scanf("%s", a);
     if (a[0] == 'y' || a[0] == 'Y')
     {
         system("cls");
-        seatmatrix_display();
-
-    }
-    else
-    {
         char p='%';
         printf("Total Amount : Rs. %f + 18 %c GST\n",match.ticketprice,p);
         // print_bill();
         system("pause");
         payment_gateway();
+
+    }
+    else
+    {
+        exit(0);
     }
 }
 void location_selection(int c){
@@ -588,8 +593,9 @@ void location_selection(int c){
                 while (fscanf(myFileStream, "%d %s %s %s %s", &code, match.matches, match.location, match.date, match.time) == 5)
                 {
                     if(strcmp(location,match.location)==0) printf("\t\t%4d. %-12s %-12s  %-15s %-7s\n", code, match.matches, match.location, match.date, match.time);
-                    break;
+                    // break;
                 }
+                system("pause");
                 seatmatrix_display();
             }
         }
@@ -601,12 +607,73 @@ void location_selection(int c){
         }
     }
 }
+void upi_payment(double  amount){
+    char vcode[6];
+    char vpa[15];
+    int c;
+    printf("Enter VPA ID : ");
+    scanf("%s",vpa);
+    printf("\n Enter Verification Code : ");
+    scanf("%s",vcode);
+    printf("\n Payment Succesfull \n");
+    print_bill();
+}
+
+void netbanking(double amount){
+    char  accno[20] ;
+    printf("\n Net Banking Payment\n");
+    printf("Account Number : ");
+    scanf("%s",accno);
+    printf("\n Transaction Id :  3789654321\n");
+    printf("\n Payment Successful.\n");
+    print_bill();
+}
+
+void debitcard(double amount) {
+    char nameOnCard[30];
+    long cardNumber;
+    char expiryDate[5];
+    printf("\n Debit Card Payment\n");
+    printf("Name On The Card : ");
+    gets(nameOnCard);
+    printf("Card Number : ");
+    scanf("%ld",&cardNumber);
+    printf("Expiry Date (MM/YY) : ");
+    scanf("%s",expiryDate);
+    if ((strlen(expiryDate) != 4) ) {
+        printf("\n Invalid Expiry Date Format! Please enter in format MM/YY.");
+        debitcard(amount);
+    } else{
+        printf("\n Payment Successful.\n");
+        print_bill();
+    }
+}
+
+void creditcard(double amount){
+    char nameOnCard[30];
+    long cardNumber;
+    char expiryDate[5];
+    printf("\n Credit Card Payment\n");
+    printf("Name On The Card : ");
+    gets(nameOnCard);
+    printf("Card Number : ");
+    scanf("%ld",&cardNumber);
+    printf("Expiry Date (MM/YY) : ");
+    scanf("%s",expiryDate);
+    if ((strlen(expiryDate) != 4) ) {
+        printf("\n Invalid Expiry Date Format! Please enter in format MM/YY.");
+        creditcard(amount);
+    } else{
+        printf("\n Payment Successful.\n");
+        print_bill();
+    }
+}
 void payment_gateway(){
     system("cls");
     printf("Enter Your Name :");
     scanf("%s",c1.name);
     int choice;
-    double amount=(match.ticketprice+match.ticketprice*18/100.0);
+    amount=(match.ticketprice+match.ticketprice*18/100.0);
     printf("\n\n Amount to be  paid is Rs. %.2f \n",amount);
     printf("\n\n Select Payment Method: ");
     printf("\n 1. UPI Payment \n 2. Net Banking/E-Wallet \n 3. Debit Card \n 4. Credit Card\n");
@@ -683,73 +750,41 @@ void save_details(){
         count++;
     }
     if(customerid<check)customerid=check+1;
-    fprintf(myFileStream,"%d %s %d \n",customerid,c1.name,c1.number);
+    fprintf(myFileStream,"%d %s %d \n",count+1,c1.name,c1.number);
     FILE *fp=fopen("orderhistory.txt","a");
-    fprintf(fp,"%d %s %s %s \n",customerid,match.matches,match.date,match.location);
+    fprintf(fp,"%d %s %s %s %s\n",count+1,c1.name,match.matches,match.date,match.location);
     fclose(myFileStream);
     fclose(fp);
 }
 
-void upi_payment(double  amount){
-    char vcode[6];
-    char vpa[15];
-    int c;
-    printf("Enter VPA ID : ");
-    scanf("%s",vpa);
-    printf("\n Enter Verification Code : ");
-    scanf("%s",vcode);
-    printf("\n Payment Succesfull \n");
-    print_bill();
-}
-
-void netbanking(double amount){
-    char  accno[20] ;
-    printf("\n Net Banking Payment\n");
-    printf("Account Number : ");
-    scanf("%s",accno);
-    printf("\n Transaction Id :  3789654321\n");
-    printf("\n Payment Successful.\n");
-    print_bill();
-}
-
-void debitcard(double amount) {
-    char nameOnCard[30];
-    long cardNumber;
-    char expiryDate[5];
-    printf("\n Debit Card Payment\n");
-    printf("Name On The Card : ");
-    gets(nameOnCard);
-    printf("Card Number : ");
-    scanf("%ld",&cardNumber);
-    printf("Expiry Date (MM/YY) : ");
-    scanf("%s",expiryDate);
-    if ((strlen(expiryDate) != 4) ) {
-        printf("\n Invalid Expiry Date Format! Please enter in format MM/YY.");
-        debitcard(amount);
-    } else{
-        printf("\n Payment Successful.\n");
-        print_bill();
+void display_bill(int choices[], int quantities[], int num_items) {
+    float total = 0;
+    printf("\nYour Bill:\n");
+    printf("Snack        Quantity      Price\n");
+    printf("-------------------------------------------------------\n");
+    for (int i = 0; i < num_items; i++) {
+        float price;
+        switch(choices[i]) {
+            case 1: price = 20.0; printf("Chips             "); break;
+            case 2: price = 30.0; printf("Chocolate Bar     "); break;
+            case 3: price = 25.0; printf("Popcorn           "); break;
+            case 4: price = 15.0; printf("Soda              "); break;
+            case 5: price = 50.0; printf("Sandwich          "); break;
+            case 6: price = 10.0; printf("Samosa            "); break;
+            case 7: price = 35.0; printf("Ice Cream         "); break;
+            case 8: price = 40.0; printf("Pizza Slice       "); break;
+            case 9: price = 45.0; printf("Burger            "); break;
+            case 10: price = 25.0; printf("French Fries      "); break;
+        }
+        printf("          %d           Rs. %.2f\n", quantities[i], price * quantities[i]);
+        total += price * quantities[i];
     }
-}
-
-void creditcard(double amount){
-    char nameOnCard[30];
-    long cardNumber;
-    char expiryDate[5];
-    printf("\n Credit Card Payment\n");
-    printf("Name On The Card : ");
-    gets(nameOnCard);
-    printf("Card Number : ");
-    scanf("%ld",&cardNumber);
-    printf("Expiry Date (MM/YY) : ");
-    scanf("%s",expiryDate);
-    if ((strlen(expiryDate) != 4) ) {
-        printf("\n Invalid Expiry Date Format! Please enter in format MM/YY.");
-        creditcard(amount);
-    } else{
-        printf("\n Payment Successful.\n");
-        print_bill();
-    }
+    printf("-------------------------------------------------------\n");
+    printf("Total:                                  Rs. %.2f\n", total);
+    printf("\n");
+    system("pause");
+    system("clr");
+    end_page();
 }
 
 // Function to display the list of snacks with their prices
@@ -813,32 +848,7 @@ void display_snacks() {
 }
 
 // Function to calculate and display the bill
-void display_bill(int choices[], int quantities[], int num_items) {
-    float total = 0;
-    printf("\nYour Bill:\n");
-    printf("Snack        Quantity      Price\n");
-    printf("-------------------------------------------------------\n");
-    for (int i = 0; i < num_items; i++) {
-        float price;
-        switch(choices[i]) {
-            case 1: price = 20.0; printf("Chips             "); break;
-            case 2: price = 30.0; printf("Chocolate Bar     "); break;
-            case 3: price = 25.0; printf("Popcorn           "); break;
-            case 4: price = 15.0; printf("Soda              "); break;
-            case 5: price = 50.0; printf("Sandwich          "); break;
-            case 6: price = 10.0; printf("Samosa            "); break;
-            case 7: price = 35.0; printf("Ice Cream         "); break;
-            case 8: price = 40.0; printf("Pizza Slice       "); break;
-            case 9: price = 45.0; printf("Burger            "); break;
-            case 10: price = 25.0; printf("French Fries      "); break;
-        }
-        printf("          %d           Rs. %.2f\n", quantities[i], price * quantities[i]);
-        total += price * quantities[i];
-    }
-    printf("-------------------------------------------------------\n");
-    printf("Total:                                  Rs. %.2f\n", total);
-    end_page();
-}
+
 
 
 void end_page (){
@@ -1018,9 +1028,9 @@ void delete_matches(){
         }
 
     printf("Want to delete more Matches ? (Y/N)");
-    char c;
-    scanf("%c",c);
-    if (c=='Y'||c=="y")
+    char c[2];
+    scanf("%s",c);
+    if (c[0]=='Y'||c[0]=='y')
     {
         delete_matches();
     }
@@ -1055,47 +1065,47 @@ void aboutUs() {
 }
 void contactUs() {
     printf("\n");
-    printf("+---------------------------------------------------------------------------+\n");
-    printf("|                            Contact Us                                     |\n");
-    printf("+---------------------------------------------------------------------------+\n");
-    printf("|                                                                           |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shaikh sahil                                                       |\n");
-    printf("|  Email: Shaikh_2301cs76@iitp.ac.in                                        |\n");
-    printf("|  Roll No: 2301CS76                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|  Name: Shubham Agrawal                                                    |\n");
-    printf("|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
-    printf("|  Roll No: 2301AI44                                                        |\n");
-    printf("|                                                                           |\n");
-    printf("|                                                                           |\n");
-    printf("+---------------------------------------------------------------------------+\n\n");
+    printf("/t/t+---------------------------------------------------------------------------+\n");
+    printf("/t/t|                            Contact Us                                     |\n");
+    printf("/t/t+---------------------------------------------------------------------------+\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Shubham Agrawal                                                    |\n");
+    printf("/t/t|  Email: Shubham_2301ai44@iitp.ac.in                                       |\n");
+    printf("/t/t|  Roll No: 2301AI44                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Shaikh sahil                                                       |\n");
+    printf("/t/t|  Email: Shaikh_2301cs76@iitp.ac.in                                        |\n");
+    printf("/t/t|  Roll No: 2301CS76                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Gali Uday Aditya                                                   |\n");
+    printf("/t/t|  Email: uday_2301cs71@iitp.ac.in                                          |\n");
+    printf("/t/t|  Roll No: 2301CS71                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Ankit Chatterjee                                                   |\n");
+    printf("/t/t|  Email: ankit_2301cb57@iitp.ac.in                                         |\n");
+    printf("/t/t|  Roll No: 2301CB57                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Sahil Pratap                                                       |\n");
+    printf("/t/t|  Email: sahil_2301ec45@iitp.ac.in                                         |\n");
+    printf("/t/t|  Roll No: 2301EC45                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Namrata Singh                                                      |\n");
+    printf("/t/t|  Email: namrata_2301cb67@iitp.ac.in                                       |\n");
+    printf("/t/t|  Roll No: 2301CB67                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Ayush                                                              |\n");
+    printf("/t/t|  Email: ayush_2301ce54@iitp.ac.in                                         |\n");
+    printf("/t/t|  Roll No: 2301CE54                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Ajeet Yadav                                                        |\n");
+    printf("/t/t|  Email: ajeet_2301ee38@iitp.ac.in                                         |\n");
+    printf("/t/t|  Roll No: 2301EE38                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|  Name: Raju Kumar                                                         |\n");
+    printf("/t/t|  Email: raju_2301ct33@iitp.ac.in                                          |\n");
+    printf("/t/t|  Roll No: 2301CT33                                                        |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t|                                                                           |\n");
+    printf("/t/t+---------------------------------------------------------------------------+\n\n");
 }
