@@ -570,7 +570,8 @@ void seat_selection()
     }
     else
     {
-        exit(0);
+        // exit(0);
+        menu();
     }
 }
 void location_selection(int c){
