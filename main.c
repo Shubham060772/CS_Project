@@ -2,6 +2,7 @@
 #include<math.h>
 #include<string.h>
 #include<stdlib.h>
+#include<conio.h>
 typedef struct IPL{
     char matches[12];
     char location[12];
@@ -18,7 +19,7 @@ typedef struct customer
 {
     char name[20];
     char gender[2];
-    int number;
+    char number[11];
 }customer;
 customer c1,c2,c3;
 double amount;
@@ -118,33 +119,41 @@ void welcome(){
 }
 void login(){
     char pass[20];
-    char password[20]="CS112PG32";
-    printf("\n\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 ); 
-    printf("\n");
-    printf("\t\t\t\t\t     LOGIN PAGE");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\n\n");
+    char password[20]="password";
+    printf("\n\n"); printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 ); printf("\n");
+    printf("\t\t\t\t\t     LOGIN PAGE");printf("\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 );printf("\n\n");
     printf("\t\t Enter your Phone number : ");
     scanf("%d", &c1.number);
     printf("\n");
     printf("\t\t Enter your Password to login : ");
-    scanf("%s", pass);
+    // password[0]=getch();
+    // printf("*");
+    int i=0;
+    while (i<20)
+    {
+        pass[i]=getch();
+        char c=pass[i];
+        if(c==13) break;
+        printf("*");
+        i++;
+
+    }
+    pass[i]='\0';
+    // printf("%s", pass);
     system("cls");
-    menu();
-    // if (strcmp(pass,password)!=0)
-    // {
-    //     printf("Wrong password !!");
-    //     login();
-    //     // exit(1);
-    // }
-    // else
-    // {
-    //     menu();
-    // }
+    // menu();
+    if (strcmp(pass,"password")==0)
+    {
+        menu();
+    }
+    else
+    {
+        printf("Wrong password !!");
+        login();
+        // exit(1);
+    }
     
     
 }
@@ -153,23 +162,27 @@ void admin_login(){
     char id[9];
     char userid[9]="2301AI44";
     char password[20]="CS112PG32";
-    printf("\n\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 ); 
-    printf("\n");
-    printf("\t\t\t\t\t   ADMIN LOGIN PAGE");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\n\n");
+    printf("\n\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 ); printf("\n");
+    printf("\t\t\t\t\t   ADMIN LOGIN PAGE");printf("\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 );printf("\n\n");
     printf("\t\t Enter Admin ID  : ");
     scanf("%s", id);
     printf("\n");
     printf("\t\t Enter Password to login : ");
-    scanf("%s", pass);
+      int i=0;
+    while (i<20)
+    {
+        pass[i]=getch();
+        char c=pass[i];
+        if(c==13) break;
+        printf("*");
+        i++;
+
+    }
+    pass[i]='\0';
     system("cls");
     // menu();
-    
     if (strcmp(pass,password)!=0 || strcmp(userid,id)!=0)
     {
         printf("Wrong ID or password !!");
@@ -183,36 +196,19 @@ void admin_login(){
 }
 void menu(){
     int choice;
-    printf("\n\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 );
-    printf("\n");
-    printf("\t\t\t\t\t     MAIN MENU");
-    printf("\n\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("%c", 205 ); 
-    printf("\n");
+    printf("\n\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 ); printf("\n");
+    printf("\t\t\t\t\t     MAIN MENU"); printf("\n\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("%c", 205 ); printf("\n");
 
-    printf("\t\t 1. Book Tickets");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
-    printf("\t\t 2. Cancel Tickets");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
-    printf("\t\t 3. View order history");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
-    printf("\t\t 4.Exit");
-    printf("\n");
-    printf("\t\t");
-    for(int i=0;i<77;i++) printf("_" );
-    printf("\n\n");
+    printf("\t\t 1. Book Tickets");printf("\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );printf("\n\n");
+    printf("\t\t 2. Cancel Tickets");printf("\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );printf("\n\n");
+    printf("\t\t 3. View order history");printf("\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" ); printf("\n\n");
+    printf("\t\t 4.Exit");printf("\n");printf("\t\t");
+    for(int i=0;i<77;i++) printf("_" );printf("\n\n");
     printf("Enter your choice : ");
     scanf("%d",&choice);
     system("cls");
@@ -636,8 +632,8 @@ void debitcard(double amount) {
     char expiryDate[5];
     printf("\n Debit Card Payment\n");
     printf("Name On The Card : ");
-    gets(nameOnCard);
-    printf("Card Number : ");
+    scanf("%s",nameOnCard);
+    printf("\nCard Number : ");
     scanf("%ld",&cardNumber);
     printf("Expiry Date (MM/YY) : ");
     scanf("%s",expiryDate);
@@ -751,7 +747,7 @@ void save_details(){
         count++;
     }
     if(customerid<check)customerid=check+1;
-    fprintf(myFileStream,"%d %s %d \n",count+1,c1.name,c1.number);
+    fprintf(myFileStream,"%d %s %s \n",count+1,c1.name,c1.number);
     FILE *fp=fopen("orderhistory.txt","a");
     fprintf(fp,"%d %s %s %s %s\n",count+1,c1.name,match.matches,match.date,match.location);
     fclose(myFileStream);
